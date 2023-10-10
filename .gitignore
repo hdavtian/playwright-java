@@ -1,0 +1,56 @@
+# Our exclusions
+screenshot
+build
+
+
+# From maven team
+# https://github.com/github/gitignore/blob/main/Maven.gitignore
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse m2e generated files
+# Eclipse Core
+.project
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+# From testng team
+# https://github.com/testng-team/testng/blob/master/.gitignore
+.ant-targets*
+.classpath
+.gradle
+.idea
+*.ipr
+*.iws
+*.iml
+.project
+.settings
+/_eclipse/
+/local.properties
+build
+eclipse-build
+ivy*
+javadocs
+lib
+maven-testng-plugin-1.2.jar
+nb-configuration.xml
+out
+src/generated
+target
+test-output
+test-output-tests
+testng.iml
+z_build
+.DS_Store
+outputDir/
+**/Version.java
+**/bin/
