@@ -6,6 +6,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.harma.tf.factory.PlaywrightFactory;
 import com.harma.tf.factory.PropertiesFactory;
 import com.harma.tf.pages.HomePage;
@@ -13,32 +15,23 @@ import com.microsoft.playwright.Page;
 
 public class BaseTest {
 
-	/*
-	 * protected PlaywrightFactory pf; protected Page page; protected HomePage
-	 * homePage; protected Properties props;
-	 * 
-	 * @BeforeTest public void setup() { PropertiesFactory propFactory = new
-	 * PropertiesFactory("config.properties"); props = propFactory.getProperties();
-	 * pf = new PlaywrightFactory(); String browserName =
-	 * props.getProperty("browser").trim(); page = pf.initBrowser(browserName);
-	 * homePage = new HomePage(page); }
-	 * 
-	 * @AfterTest public void teardown() { page.context().browser().close(); }
-	 */
-	
 	PlaywrightFactory pf;
 	protected Page page;
 	protected Properties props;
-
 	protected HomePage homePage;
+	protected static ExtentReports extent;
 
 	@Parameters({ "browser" })
 	@BeforeTest
 	public void setup(String browserName) {
+		
 		pf = new PlaywrightFactory();
-
 		props = new PropertiesFactory("config.properties").getProperties();
 
+		ExtentSparkReporter spark = new ExtentSparkReporter("Spark.html");
+		extent = new ExtentReports();
+        extent.attachReporter(spark);
+		
 		if (browserName != null) {
 			props.setProperty("browser", browserName);
 		}

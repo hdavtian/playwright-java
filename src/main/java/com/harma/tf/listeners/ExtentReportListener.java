@@ -26,7 +26,7 @@ public class ExtentReportListener implements ITestListener {
 	private static ExtentReports extent = init();
 	public static ThreadLocal<ExtentTest> test = new ThreadLocal<ExtentTest>();
 	private static ExtentReports extentReports;
-	
+	public static ExtentTest extentTest;
 
 	private static ExtentReports init() {
 
@@ -77,7 +77,7 @@ public class ExtentReportListener implements ITestListener {
 		String className = qualifiedName.substring(mid + 1, last);
 
 		System.out.println(methodName + " started!");
-		ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName(),
+		extentTest = extent.createTest(result.getMethod().getMethodName(),
 				result.getMethod().getDescription());
 
 		extentTest.assignCategory(result.getTestContext().getSuite().getName());
