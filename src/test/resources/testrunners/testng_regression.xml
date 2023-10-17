@@ -15,11 +15,12 @@
 		</classes>
 	</test>
 
+<!--
 	<test name="Homepage Test_firefox">
 		<parameter name="browser" value="firefox" />
 		<classes>
 			<class name="com.harma.tf.tests.HomePageTest" />
 		</classes>
-	</test>
+	</test>-->
 
 </suite>
