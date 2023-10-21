@@ -43,9 +43,11 @@ public class IC_10c_uat16_sdkangTest extends BaseTest {
 		listApp = new ListApp(page, test, appName);
 		listApp.singleInstanceExists();
 		listApp.isVisible();
+		listApp.scrollIntoViewIfNeeded();
 		listApp.containsText_ignoringCaseAndSpecialChars2("Richard Lumb");
 		listApp.containsText_ignoringCaseAndSpecialChars2("john Meriwether");
-		
+		listApp.highlightApp();
+		listApp.highlightApp();
 		
 	}
 	

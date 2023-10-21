@@ -49,8 +49,9 @@ public abstract class BaseApp {
 		
 		if (appElements.size() > 1) {
 			test.log(Status.INFO, String.format("** Multiple Apps found '%d', will try to select the visible one", this.appLocator.all().size()));
-			this.appElement = getSingleVisibleApp();
+			//this.appElement = getSingleVisibleApp();
 		}
+		this.appElement = getSingleVisibleApp();
 		
 	}
 	
@@ -68,14 +69,12 @@ public abstract class BaseApp {
 	
 	public void highlightApp() {
 		Util.addTFStylesheetToPageIfNecessasry(page);
-		page.evalOnSelector(selector, "el => el.classList.add('ictf-highlight-element')");
+		page.evaluate("el => el.classList.add('ictf-highlight-element')", this.appElement);
 		test.log(Status.INFO, "Added 'harma' class to element: '" + appName + "'");
 	}
 	
 	public boolean isVisible() {
-		//Boolean isVisible = appLocator.isVisible();
 		Boolean isVisible = appElement.isVisible();
-		
 		test.log(Status.INFO, "App '" + appName + "' is visible: " + Boolean.toString(isVisible));
 		return isVisible;
 	}
