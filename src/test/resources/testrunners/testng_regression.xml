@@ -8,19 +8,31 @@
 			class-name="com.harma.tf.listeners.ExtentReportListener" />
 	</listeners>
 
+	<!--
 	<test name="Homepage Test_chrome">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.harma.tf.tests.HomePageTest" />
 		</classes>
 	</test>
-
-<!--
-	<test name="Homepage Test_firefox">
-		<parameter name="browser" value="firefox" />
+	-->
+	
+	<!-- IC_10c_uat16_sdkangTest -->
+	
+	<test name="LoginPage Test_chrome">
+		<parameter name="browser" value="chrome" />
 		<classes>
-			<class name="com.harma.tf.tests.HomePageTest" />
+			<class name="com.harma.tf.tests.IC_10c_uat16_sdkangTest" />
 		</classes>
-	</test>-->
+	</test>
+
+	<!--
+		<test name="Homepage Test_firefox">
+			<parameter name="browser" value="firefox" />
+			<classes>
+				<class name="com.harma.tf.tests.HomePageTest" />
+			</classes>
+		</test>
+	-->
 
 </suite>

@@ -18,7 +18,7 @@ public class BaseTest {
 	PlaywrightFactory pf;
 	protected Page page;
 	protected Properties props;
-	protected HomePage homePage;
+	//protected HomePage homePage;
 	protected static ExtentReports extent;
 
 	@Parameters({ "browser" })
@@ -37,7 +37,7 @@ public class BaseTest {
 		}
 
 		page = pf.initBrowser(props);
-		homePage = new HomePage(page);
+		//homePage = new HomePage(page);
 	}
 
 	@AfterTest

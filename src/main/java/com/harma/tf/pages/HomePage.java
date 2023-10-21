@@ -11,6 +11,7 @@ public class HomePage {
 		this.page = page;
 	}
 	
+	/*
 	// selectors
 	private String headerLogo = "div[data-app='Core.Header.Logo.App']";
 	
@@ -30,5 +31,6 @@ public class HomePage {
 	public void clickLogo() {
 		page.click(headerLogo);
 	}
+	*/
 
 }
