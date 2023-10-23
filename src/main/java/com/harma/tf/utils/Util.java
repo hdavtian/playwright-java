@@ -38,6 +38,23 @@ public final class Util {
 		}
 	}
 	
+	public static void loadLocalCssFileIfNecessary(Page page, String _path) {
+		
+		boolean isStyleIncluded = (boolean) page.evaluate("() => " +
+				 "document.querySelectorAll('#ictf-stylesheet-injected-at-runtime').length != 0");
+		
+		if (!isStyleIncluded) {
+			page.addStyleTag(new Page.AddStyleTagOptions().setPath(Paths.get(_path)));
+			
+			page.evaluate("() => {" +
+					"const styleTags = Array.from(document.getElementsByTagName('style'));" + 
+					"const lastIndex = styleTags.length - 1; " +
+					"styleTags[lastIndex].setAttribute('id', 'ictf-stylesheet-injected-at-runtime');" +
+					"};"
+			);
+		}
+	}
+	
 	
 	
 }

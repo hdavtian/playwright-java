@@ -68,9 +68,12 @@ public abstract class BaseApp {
 	}
 	
 	public void highlightApp() {
-		Util.addTFStylesheetToPageIfNecessasry(page);
+		String _path = "D:/Users/Harma Davtian/eclipse-workspace2/PlaywrightPOMSeries/src/main/resources/css/ictf.css"; 
+		Util.loadLocalCssFileIfNecessary(page, _path);
 		page.evaluate("el => el.classList.add('ictf-highlight-element')", this.appElement);
-		test.log(Status.INFO, "Added 'harma' class to element: '" + appName + "'");
+		test.log(Status.INFO, "Added 'ictf-highlight-element' class to element: '" + appName + "'");
+		// dwd
+		//appElement.boundingBox();
 	}
 	
 	public boolean isVisible() {
