@@ -2,8 +2,10 @@ package com.harma.tf.utils;
 
 import java.nio.file.Paths;
 
+import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Page.AddStyleTagOptions;
+import com.microsoft.playwright.options.BoundingBox;
 
 public final class Util {
 
@@ -55,6 +57,8 @@ public final class Util {
 		}
 	}
 	
-	
+	public static BoundingBox getAppBoundingBox(ElementHandle el) {
+		return el.boundingBox();
+	}
 	
 }

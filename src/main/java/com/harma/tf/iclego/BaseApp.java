@@ -1,15 +1,18 @@
 package com.harma.tf.iclego;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.testng.Assert;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import com.google.gson.JsonObject;
 import com.harma.tf.utils.Util;
 import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.BoundingBox;
 
 public abstract class BaseApp {
 	
@@ -51,6 +54,9 @@ public abstract class BaseApp {
 			test.log(Status.INFO, String.format("** Multiple Apps found '%d', will try to select the visible one", this.appLocator.all().size()));
 			//this.appElement = getSingleVisibleApp();
 		}
+		
+		
+		
 		this.appElement = getSingleVisibleApp();
 		
 	}
@@ -68,12 +74,74 @@ public abstract class BaseApp {
 	}
 	
 	public void highlightApp() {
+		
+		// .
+		// ..
+		// ...
+		// We are going to inject a div in an absolutely positioned container on top page
+		// Next for each appElement, we will inject a div at same position and dimensions but with
+		// a z-index positioning it on top of everything. This div will have borders to indicate which
+		// app element is being worked on. This is in contrast to simply giving the actual app element
+		// a border which may cause a breakage in layout. We may also conditionally (with other methods)
+		// show messages in the inserted div to indicate commands being executes, status, etc
+		// .
+		// ..
+		// ...
+		
+		// First, conditionally add a local css file to the page containing styles for injected elements
 		String _path = "D:/Users/Harma Davtian/eclipse-workspace2/PlaywrightPOMSeries/src/main/resources/css/ictf.css"; 
 		Util.loadLocalCssFileIfNecessary(page, _path);
-		page.evaluate("el => el.classList.add('ictf-highlight-element')", this.appElement);
+		
+		// Conditionally inject the two container divs on the page
+		// The first will be positioned absolutely with a high z-index to sit on top of everything
+		// The second will be positioned relatively
+		// We will inject other divs in the inner div later and position them accordingly
+		
+		StringBuilder _script = new StringBuilder();
+		_script.append("(() => { if (document.querySelector('#ictf-highlighted-apps-main-container') != null){ return;}")
+			.append("const body = document.body;")
+			.append("const mainContainerDiv = document.createElement('div');")
+			.append("mainContainerDiv.setAttribute('id', 'ictf-highlighted-apps-main-container');")
+			.append("const innerDiv = document.createElement('div');")
+			.append("innerDiv.setAttribute('id', 'ictf-highlighted-apps-inner-container');")
+			.append("mainContainerDiv.appendChild(innerDiv);")
+			.append("body.appendChild(mainContainerDiv);")
+			.append("console.log('ictf container and inner divs injected for highlighting apps during test');")
+			.append("})");
+		
+		page.evaluate(_script.toString());
+		
+		// get the scroll position
+		LinkedHashMap<String, Object> scrollPosition = (LinkedHashMap<String, Object>) page.evaluate("() => {" +
+                "return {" +
+                "    x: window.scrollX," +
+                "    y: window.scrollY" +
+                "};" +
+                "}");
+		
+		int scrollX = Integer.parseInt(scrollPosition.get("x").toString());
+        int scrollY = Integer.parseInt(scrollPosition.get("y").toString());
+        
+        BoundingBox bbox = Util.getAppBoundingBox(this.appElement);
+        int _top = (int)bbox.y + scrollY;
+        int _left = (int)bbox.x + scrollX;
+        		
+		
+		// insert a new div in the container div with boundingbox location and dimensions and add border
+		ElementHandle containerDiv = page.querySelector("#ictf-highlighted-apps-inner-container");
+		containerDiv.evaluate(
+					"el => {" +
+						"const appDiv = document.createElement('div');" +
+						"appDiv.setAttribute('class', 'ictf-injected-app-highlight-card ictf-visible ictf-border-15-green-solid');" +
+						"appDiv.style.top='"	+ _top 	+ "px';" +
+						"appDiv.style.left='"	+ _left + "px';" +
+						"appDiv.style.width='"+ (int)bbox.width + "px';" +
+						"appDiv.style.height='"+ (int)bbox.height + "px';" +
+						"el.appendChild(appDiv);" +
+				"}");
+		
+		//page.evaluate("el => el.classList.add('ictf-highlight-element')", this.appElement);
 		test.log(Status.INFO, "Added 'ictf-highlight-element' class to element: '" + appName + "'");
-		// dwd
-		//appElement.boundingBox();
 	}
 	
 	public boolean isVisible() {
@@ -135,22 +203,13 @@ public abstract class BaseApp {
 		// I am injecting a local custom js file which includes some functions that 
 		// will be used in determining our complex methods of determining if apps are visible
 		// on the page. We cannot rely on basic visibility algos
-		Util.loadJsFile(page, "../PlaywrightPOMSeries/src/main/resources/js/util.js", "harma");
+		Util.loadJsFile(page, "../PlaywrightPOMSeries/src/main/resources/js/util.js", "ictf");
 		
-		/*
-		Locator theApp = null;
-		List<Locator> allApps = appLocator.all();
+		int visibleAppCount = getNumberOfVisibleAppsByThisName();
 		
-		int appIndex = 1;
-		for (Locator _app : allApps) {
-			if ((boolean)page.evaluate("isElementVisible", _app)) {
-				theApp = _app;
-				test.log(Status.INFO, String.format("Visible app at index '%d' selected", appIndex));
-				break;
-			}
-			appIndex++;
+		if (visibleAppCount > 1) {
+			test.log(Status.INFO, String.format("Strange sitution, multiple apps visible (%d) apps by name '%s' have been found", visibleAppCount, appName ));
 		}
-		*/
 		
 		ElementHandle theApp = null;
 		int appIndex = 1;
@@ -164,5 +223,26 @@ public abstract class BaseApp {
 		}
 		
 		return theApp;
+	}
+	
+	private int getNumberOfVisibleAppsByThisName() {
+		
+		Util.loadJsFile(page, "../PlaywrightPOMSeries/src/main/resources/js/util.js", "ictf");
+		
+		int appIndex = 1;
+		int appsWithNameCount = appElements.size();
+		int visibleAppsWithNameCount = 0;
+		
+		for (ElementHandle _appEl : appElements) {
+			if ((boolean)page.evaluate("isElementVisible", _appEl)) {
+				test.log(Status.INFO, String.format("App '%s' at index '%d/%d' is visible", appName, appIndex, appsWithNameCount));
+				visibleAppsWithNameCount++;
+			} else {
+				test.log(Status.INFO, String.format("App '%s' at index '%d/%d' is not visible", appName, appIndex, appsWithNameCount));
+			}
+			appIndex++;
+		}
+		
+		return visibleAppsWithNameCount;
 	}
 }

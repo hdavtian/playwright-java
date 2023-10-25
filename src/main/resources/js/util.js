@@ -1,5 +1,5 @@
-function harma(){
-    console.log("yoyoyo");
+function ictf(){
+    console.log("ictf js file");
 }
 
 function isElementVisible(el) {

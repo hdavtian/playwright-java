@@ -32,7 +32,9 @@ public class HomePageTest extends BaseTest{
 			appName = "Core.Header.Menu.App";
 			inputApp = new InputApp(page, test, appName);
 			inputApp.singleInstanceExists();
+			inputApp.scrollIntoViewIfNeeded();
 			inputApp.isVisible();
+			inputApp.highlightApp();
 			Assert.assertTrue(inputApp.singleInstanceExists(), "Failed");
 			Assert.assertTrue(inputApp.isVisible(), "Failed");
 			
@@ -45,8 +47,10 @@ public class HomePageTest extends BaseTest{
 			// H.Hero.Title.Input.App
 			appName = "H.Hero.Title.Input.App";
 			inputApp = new InputApp(page, test, appName);
+			inputApp.scrollIntoViewIfNeeded();
 			inputApp.singleInstanceExists();
 			inputApp.isVisible();
+			inputApp.highlightApp();
 			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digita_xyz");
 			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digital");
 			
@@ -56,8 +60,10 @@ public class HomePageTest extends BaseTest{
 			
 			appName = "v4TeamMembers.List.App";
 			listApp = new ListApp(page, test, appName);
+			listApp.scrollIntoViewIfNeeded();
 			listApp.singleInstanceExists();
 			listApp.isVisible();
+			listApp.highlightApp();
 			listApp.containsText_ignoringCaseAndSpecialChars("xyzRichard Lumb");
 			listApp.containsText_ignoringCaseAndSpecialChars("Richard Lumb");
 			
@@ -67,19 +73,24 @@ public class HomePageTest extends BaseTest{
 			assertAppCmd.isVisible();
 			*/
 			
-			/*
+			
 			 
 			// ************************************************************************
 			
 			//https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=digiwealthholderapp
 			// DigiWealth.Hero.Desc.App
 			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=digiwealthholderapp");
+			appName = "DigiWealth.Hero.Desc.App";
+			inputApp = new InputApp(page, test, appName);
+			inputApp.scrollIntoViewIfNeeded();
+			inputApp.singleInstanceExists();
+			inputApp.highlightApp();
 			
-			assertAppCmd = new Command(page, test, "DigiWealth.Hero.Desc.App");
-			assertAppCmd.singleInstanceExists();
-			assertAppCmd.isVisible();
+//			assertAppCmd = new Command(page, test, "DigiWealth.Hero.Desc.App");
+//			assertAppCmd.singleInstanceExists();
+//			assertAppCmd.isVisible();
 			
-			
+			/*
 			// https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finplanholderapp
 			// FinPlan.FeatApp1.Text.App
 			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finplanholderapp");
@@ -123,6 +134,7 @@ public class HomePageTest extends BaseTest{
 			// ************************************************************************
 			
 			*/
+			
 			
 			
 			//boolean CoreAppExists = Util.appExists(page, "Core.Header.Menu.App");

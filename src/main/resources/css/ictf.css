@@ -1,3 +1,39 @@
-.ictf-highlight-element {
-    border: 10px solid red!important;
+/*
+This is the container div injected on the page in which other divs will
+be absolutely positioned to indicate highlighted apps
+*/
+#ictf-highlighted-apps-main-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+}
+
+#ictf-highlighted-apps-inner-container {
+    position: relative;
+}
+
+/*
+All injected divs will have this class
+*/
+.ictf-injected-app-highlight-card {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ictf-visible {
+    display: block!important;
+}
+
+.ictf-invisible {
+    display: none!important;
+}
+
+/*
+Borders
+*/
+
+.ictf-border-15-green-solid {
+    border: solid 15px green;
 }
