@@ -3,11 +3,8 @@ package com.harma.tf.iclego;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.testng.Assert;
-
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.google.gson.JsonObject;
 import com.harma.tf.utils.Util;
 import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.Locator;
@@ -21,12 +18,14 @@ public abstract class BaseApp {
 	// *****************************************************************
 	
 	private String appName;
+	private String highlightElementId;
 	private String selector;
 	private Locator appLocator;
 	private List<ElementHandle> appElements;
 	private ElementHandle appElement;
 	protected Page page;
 	protected ExtentTest test;
+	private boolean highlightEnabled = false;
 	
 	// *****************************************************************
 	// Constructor(s)
@@ -37,6 +36,7 @@ public abstract class BaseApp {
 		this.page = page;
 		this.test = test;
 		this.appName = appName;
+		this.highlightElementId = createHighlightElementId();
 		this.selector = "div[data-app='" + appName + "']";
 		this.appElement = page.querySelector(selector);
 		this.appElements = page.querySelectorAll(selector);
@@ -54,11 +54,7 @@ public abstract class BaseApp {
 			test.log(Status.INFO, String.format("** Multiple Apps found '%d', will try to select the visible one", this.appLocator.all().size()));
 			//this.appElement = getSingleVisibleApp();
 		}
-		
-		
-		
 		this.appElement = getSingleVisibleApp();
-		
 	}
 	
 	// *****************************************************************
@@ -74,6 +70,10 @@ public abstract class BaseApp {
 	}
 	
 	public void highlightApp() {
+		
+		if (!highlightEnabled) {
+			return;
+		}
 		
 		// .
 		// ..
@@ -132,6 +132,7 @@ public abstract class BaseApp {
 		containerDiv.evaluate(
 					"el => {" +
 						"const appDiv = document.createElement('div');" +
+						"appDiv.setAttribute('id', '"+ highlightElementId + "');" +
 						"appDiv.setAttribute('class', 'ictf-injected-app-highlight-card ictf-visible ictf-border-15-green-solid');" +
 						"appDiv.style.top='"	+ _top 	+ "px';" +
 						"appDiv.style.left='"	+ _left + "px';" +
@@ -244,5 +245,19 @@ public abstract class BaseApp {
 		}
 		
 		return visibleAppsWithNameCount;
+	}
+	
+	private String replaceAllDotWithDash(String _str) {
+		String replaced = _str.replaceAll("\\.", "-");
+		return replaced;
+	}
+	
+	private String createHighlightElementId() {
+		String id = String.format("ictf-highlighted-app--%s", replaceAllDotWithDash(appName));
+		return id;
+	}
+	
+	public void setHighlightEnabled(boolean enabled) {
+		this.highlightEnabled = enabled;
 	}
 }

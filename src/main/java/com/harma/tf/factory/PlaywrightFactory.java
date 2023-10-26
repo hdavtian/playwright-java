@@ -5,9 +5,11 @@ import java.util.Base64;
 import java.util.Properties;
 
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.BrowserType.LaunchOptions;
+import com.microsoft.playwright.options.ViewportSize;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
@@ -71,9 +73,11 @@ public class PlaywrightFactory {
 			break;
 		}
 
-		tlBrowserContext.set(getBrowser().newContext());
+		NewContextOptions contextOptions = new NewContextOptions();
+		contextOptions.setViewportSize(null);
+		tlBrowserContext.set(getBrowser().newContext(contextOptions));
 		tlPage.set(getBrowserContext().newPage());
-		getPage().navigate(prop.getProperty("url").trim());
+		//getPage().navigate(prop.getProperty("url").trim());
 		return getPage();
 
 	}

@@ -12,7 +12,7 @@ import com.harma.tf.listeners.ExtentReportListener;
 import com.microsoft.playwright.options.LoadState;
 
 public class HomePageTest extends BaseTest{
-	 
+	
 	@Test
 	public void homePageTitleTest(){
 		
@@ -27,6 +27,7 @@ public class HomePageTest extends BaseTest{
 			// https://www.investcloud.com/
 			_url = "https://www.investcloud.com/";
 			new GotoUrl(page, test, _url);
+			BaseTest.appHighlightEnabled = false;
 			
 			// Core.Header.Menu.App
 			appName = "Core.Header.Menu.App";
@@ -50,6 +51,7 @@ public class HomePageTest extends BaseTest{
 			inputApp.scrollIntoViewIfNeeded();
 			inputApp.singleInstanceExists();
 			inputApp.isVisible();
+			inputApp.setHighlightEnabled(true);
 			inputApp.highlightApp();
 			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digita_xyz");
 			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digital");

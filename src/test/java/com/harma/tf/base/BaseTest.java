@@ -18,8 +18,8 @@ public class BaseTest {
 	PlaywrightFactory pf;
 	protected Page page;
 	protected Properties props;
-	//protected HomePage homePage;
 	protected static ExtentReports extent;
+	protected static boolean appHighlightEnabled;
 
 	@Parameters({ "browser" })
 	@BeforeTest
@@ -37,7 +37,8 @@ public class BaseTest {
 		}
 
 		page = pf.initBrowser(props);
-		//homePage = new HomePage(page);
+		
+		appHighlightEnabled = false;
 	}
 
 	@AfterTest
