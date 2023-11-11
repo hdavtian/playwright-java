@@ -38,6 +38,10 @@ public class BaseTest {
 
 		page = pf.initBrowser(props);
 		
+		int vpWidth = page.viewportSize().width;
+		int vpHeight = page.viewportSize().height;
+		page.setViewportSize(vpWidth, vpHeight);
+		
 		appHighlightEnabled = false;
 	}
 

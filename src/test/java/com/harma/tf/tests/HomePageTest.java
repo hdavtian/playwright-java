@@ -9,6 +9,8 @@ import com.harma.tf.commands.*;
 import com.harma.tf.iclego.InputApp;
 import com.harma.tf.iclego.ListApp;
 import com.harma.tf.listeners.ExtentReportListener;
+import com.harma.tf.utils.BrowserReportWindow;
+import com.harma.tf.utils.Util;
 import com.microsoft.playwright.options.LoadState;
 
 public class HomePageTest extends BaseTest{
@@ -24,10 +26,14 @@ public class HomePageTest extends BaseTest{
 		
 		try {
 			
-			// https://www.investcloud.com/
+			// Go to IC homepage
 			_url = "https://www.investcloud.com/";
 			new GotoUrl(page, test, _url);
 			BaseTest.appHighlightEnabled = false;
+			
+			// new browser window for logging
+			BrowserReportWindow reportWindow = new BrowserReportWindow(page, "Reports");
+			reportWindow.openWindow();
 			
 			// Core.Header.Menu.App
 			appName = "Core.Header.Menu.App";

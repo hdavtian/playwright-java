@@ -1,7 +1,9 @@
 package com.harma.tf.factory;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Properties;
 
 import com.microsoft.playwright.Browser;
@@ -15,30 +17,35 @@ import com.microsoft.playwright.Playwright;
 
 public class PlaywrightFactory {
 
-	Playwright playwright;
-	Browser browser;
-	BrowserContext browserContext;
-	Page page;
+	private static Playwright playwright;
+	private static Browser browser;
+	private static BrowserContext browserContext;
+	private static Page page;
+	
 
-	private static ThreadLocal<Browser> tlBrowser = new ThreadLocal<>();
-	private static ThreadLocal<BrowserContext> tlBrowserContext = new ThreadLocal<>();
-	private static ThreadLocal<Page> tlPage = new ThreadLocal<>();
-	private static ThreadLocal<Playwright> tlPlaywright = new ThreadLocal<>();
+	//private static ThreadLocal<Browser> tlBrowser = new ThreadLocal<>();
+	//private static ThreadLocal<BrowserContext> tlBrowserContext = new ThreadLocal<>();
+	//private static ThreadLocal<Page> tlPage = new ThreadLocal<>();
+	//private static ThreadLocal<Playwright> tlPlaywright = new ThreadLocal<>();
 
 	public static Playwright getPlaywright() {
-		return tlPlaywright.get();
+		return playwright;
 	}
 
 	public static Browser getBrowser() {
-		return tlBrowser.get();
+		return browser;
 	}
 
 	public static BrowserContext getBrowserContext() {
-		return tlBrowserContext.get();
+		return browserContext;
 	}
 
 	public static Page getPage() {
-		return tlPage.get();
+		return page;
+	}
+	
+	public static void setPage(Page _page) {
+		page = _page;
 	}
 
 	public Page initBrowser(Properties prop) {
@@ -46,26 +53,29 @@ public class PlaywrightFactory {
 		String browserName = prop.getProperty("browser").trim();
 		System.out.println("browser name is : " + browserName);
 
-		// playwright = Playwright.create();
-		tlPlaywright.set(Playwright.create());
+		playwright = Playwright.create();
+//		tlPlaywright.set(Playwright.create());
 
 		switch (browserName.toLowerCase()) {
 		case "chromium":
-			tlBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+			//tlBrowser.set(getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+			browser = getPlaywright().chromium().launch(new BrowserType.LaunchOptions().setHeadless(false));
 			break;
 		case "firefox":
-			tlBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+			//tlBrowser.set(getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+			browser = getPlaywright().firefox().launch(new BrowserType.LaunchOptions().setHeadless(false));
 			break;
 		case "safari":
-			tlBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+//			tlBrowser.set(getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false)));
+			browser = getPlaywright().webkit().launch(new BrowserType.LaunchOptions().setHeadless(false));
 			break;
 		case "chrome":
-			tlBrowser.set(
-					getPlaywright().chromium().launch(new LaunchOptions().setChannel("chrome").setHeadless(false)));
+//			tlBrowser.set(getPlaywright().chromium().launch(new LaunchOptions().setChannel("chrome").setHeadless(false)));
+			browser = getPlaywright().chromium().launch(new LaunchOptions().setChannel("chrome").setHeadless(false));
 			break;
 		case "edge":
-			tlBrowser.set(
-					getPlaywright().chromium().launch(new LaunchOptions().setChannel("msedge").setHeadless(false)));
+//			tlBrowser.set(getPlaywright().chromium().launch(new LaunchOptions().setChannel("msedge").setHeadless(false)));
+			browser = getPlaywright().chromium().launch(new LaunchOptions().setChannel("msedge").setHeadless(false));
 			break;	
 
 		default:
@@ -74,11 +84,15 @@ public class PlaywrightFactory {
 		}
 
 		NewContextOptions contextOptions = new NewContextOptions();
-		contextOptions.setViewportSize(null);
-		tlBrowserContext.set(getBrowser().newContext(contextOptions));
-		tlPage.set(getBrowserContext().newPage());
+		//contextOptions.setViewportSize(null);
+		//tlBrowserContext.set(getBrowser().newContext(contextOptions));
+		browserContext = getBrowser().newContext(contextOptions);
+		//tlPage.set(getBrowserContext().newPage());
+		Page page = getBrowserContext().newPage();
+		setPage(page);
 		//getPage().navigate(prop.getProperty("url").trim());
-		return getPage();
+		
+		return page;
 
 	}
 
