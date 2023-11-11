@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 public class BasePage {
 
 	// Property(s)
-	protected Page page;
+	private Page page;
 	
 	// Method(s)
 	

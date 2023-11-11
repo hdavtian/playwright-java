@@ -25,6 +25,7 @@ public class IC_10c_uat16_sdkangTest extends BaseTest {
 		InputApp inputApp;
 		ListApp listApp;
 		String _url;
+		Page page = basePage.getPage();
 		
 		_url = "https://ic10cuat16sdkang.investcloud.com/";
 		new GotoUrl(page, test, _url);

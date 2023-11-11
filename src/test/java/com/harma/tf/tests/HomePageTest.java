@@ -10,8 +10,7 @@ import com.harma.tf.iclego.InputApp;
 import com.harma.tf.iclego.ListApp;
 import com.harma.tf.listeners.ExtentReportListener;
 import com.harma.tf.utils.BrowserReportWindow;
-import com.harma.tf.utils.Util;
-import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.Page;
 
 public class HomePageTest extends BaseTest{
 	
@@ -23,6 +22,7 @@ public class HomePageTest extends BaseTest{
 		InputApp inputApp;
 		ListApp listApp;
 		String _url;
+		Page page = basePage.getPage();
 		
 		try {
 			
