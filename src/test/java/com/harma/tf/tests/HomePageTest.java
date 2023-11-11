@@ -4,13 +4,16 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.harma.tf.base.BaseTest;
 import com.harma.tf.commands.*;
 import com.harma.tf.iclego.InputApp;
 import com.harma.tf.iclego.ListApp;
 import com.harma.tf.listeners.ExtentReportListener;
+import com.harma.tf.pages.BasePage;
 import com.harma.tf.utils.BrowserReportWindow;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Request;
 
 public class HomePageTest extends BaseTest{
 	
@@ -22,18 +25,26 @@ public class HomePageTest extends BaseTest{
 		InputApp inputApp;
 		ListApp listApp;
 		String _url;
-		Page page = basePage.getPage();
+		page = basePage.getPage();
 		
 		try {
 			
 			// Go to IC homepage
 			_url = "https://www.investcloud.com/";
 			new GotoUrl(page, test, _url);
+			
+			// After visiting a page, the code will automatically capture network requests/responses
+			// we can access captured info into a local variable like this
+			capturedRequests = networkInterceptor.getCapturedRequests();
+			Assert.assertTrue(networkRequestsContainsCallWithString(capturedRequests, "ecdg.ashx?requesttype=dataset&v=2"), "dang!");
+            
+            
 			BaseTest.appHighlightEnabled = false;
 			
 			// new browser window for logging
 			BrowserReportWindow reportWindow = new BrowserReportWindow(page, "Reports");
 			reportWindow.openWindow();
+			
 			
 			// Core.Header.Menu.App
 			appName = "Core.Header.Menu.App";
@@ -62,9 +73,14 @@ public class HomePageTest extends BaseTest{
 			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digita_xyz");
 			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digital");
 			
-			// https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4whowearev2holderapp
+			// Go to "About Us" page
+			BasePage myPage = new BasePage(getPlaywrightFactory().getBrowserContext().newPage());
+			page = myPage.getPage();
 			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4whowearev2holderapp";
 			new GotoUrl(page, test, _url);
+			
+			capturedRequests = networkInterceptor.getCapturedRequests();
+            Assert.assertTrue(networkRequestsContainsCallWithString(capturedRequests, "ecd.ashx?requesttype=dataset&v=2&app=v4TeamMembers_List.App"), "oopsie");
 			
 			appName = "v4TeamMembers.List.App";
 			listApp = new ListApp(page, test, appName);
@@ -87,6 +103,10 @@ public class HomePageTest extends BaseTest{
 			
 			//https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=digiwealthholderapp
 			// DigiWealth.Hero.Desc.App
+			
+			myPage = new BasePage(getPlaywrightFactory().getBrowserContext().newPage());
+			page = myPage.getPage();
+			
 			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=digiwealthholderapp");
 			appName = "DigiWealth.Hero.Desc.App";
 			inputApp = new InputApp(page, test, appName);
