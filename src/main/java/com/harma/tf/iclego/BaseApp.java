@@ -1,5 +1,6 @@
 package com.harma.tf.iclego;
 
+import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -8,8 +9,10 @@ import com.aventstack.extentreports.Status;
 import com.harma.tf.utils.Util;
 import com.microsoft.playwright.ElementHandle;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Locator.ScreenshotOptions;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
+import com.microsoft.playwright.options.Clip;
 
 public abstract class BaseApp {
 	
@@ -64,6 +67,20 @@ public abstract class BaseApp {
 	public ElementHandle getAppElement() {
 		return appElement;
 	}
+	
+	/**
+	 * Wrapper around playwright screenshot() capability
+	 */
+	public void takeScreenshot() {
+		String path = System.getProperty("user.dir") + "/screenshot/" + appName + ".png";
+		// Getting the boundingBox of element which will be used in taking the screenshot
+		BoundingBox boundingBox = appElement.boundingBox();
+		// Using Page.screenshot() to take a screenshot of a specific web element
+		page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(path)).setClip(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height));
+	}
+	
+	
+	
 	
 	public void scrollIntoViewIfNeeded() {
 		appElement.scrollIntoViewIfNeeded();
@@ -203,7 +220,7 @@ public abstract class BaseApp {
 		
 		// I am injecting a local custom js file which includes some functions that 
 		// will be used in determining our complex methods of determining if apps are visible
-		// on the page. We cannot rely on basic visibility algos
+		// on the page. We cannot rely on basic visibility checks
 		Util.loadJsFile(page, "../PlaywrightPOMSeries/src/main/resources/js/util.js", "ictf");
 		
 		int visibleAppCount = getNumberOfVisibleAppsByThisName();

@@ -4,18 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
 import com.harma.tf.base.BaseTest;
 import com.harma.tf.commands.*;
 import com.harma.tf.iclego.InputApp;
 import com.harma.tf.iclego.ListApp;
 import com.harma.tf.listeners.ExtentReportListener;
-import com.harma.tf.pages.BasePage;
 import com.harma.tf.utils.BrowserReportWindow;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Request;
 
-public class HomePageTest extends BaseTest{
+public class HomePageTest extends BaseTest {
 	
 	@Test
 	public void homePageTitleTest(){
@@ -25,26 +21,27 @@ public class HomePageTest extends BaseTest{
 		InputApp inputApp;
 		ListApp listApp;
 		String _url;
-		page = basePage.getPage();
 		
 		try {
 			
-			// Go to IC homepage
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// IC homepage
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			
 			_url = "https://www.investcloud.com/";
 			new GotoUrl(page, test, _url);
+			
+			basePage.getAllListApps();
 			
 			// After visiting a page, the code will automatically capture network requests/responses
 			// we can access captured info into a local variable like this
 			capturedRequests = networkInterceptor.getCapturedRequests();
 			Assert.assertTrue(networkRequestsContainsCallWithString(capturedRequests, "ecdg.ashx?requesttype=dataset&v=2"), "dang!");
-            
-            
 			BaseTest.appHighlightEnabled = false;
 			
 			// new browser window for logging
 			BrowserReportWindow reportWindow = new BrowserReportWindow(page, "Reports");
 			reportWindow.openWindow();
-			
 			
 			// Core.Header.Menu.App
 			appName = "Core.Header.Menu.App";
@@ -52,6 +49,7 @@ public class HomePageTest extends BaseTest{
 			inputApp.singleInstanceExists();
 			inputApp.scrollIntoViewIfNeeded();
 			inputApp.isVisible();
+			inputApp.takeScreenshot();
 			inputApp.highlightApp();
 			Assert.assertTrue(inputApp.singleInstanceExists(), "Failed");
 			Assert.assertTrue(inputApp.isVisible(), "Failed");
@@ -68,14 +66,17 @@ public class HomePageTest extends BaseTest{
 			inputApp.scrollIntoViewIfNeeded();
 			inputApp.singleInstanceExists();
 			inputApp.isVisible();
+			inputApp.takeScreenshot();
 			inputApp.setHighlightEnabled(true);
 			inputApp.highlightApp();
-			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digita_xyz");
-			inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digital");
 			
-			// Go to "About Us" page
-			BasePage myPage = new BasePage(getPlaywrightFactory().getBrowserContext().newPage());
-			page = myPage.getPage();
+			Assert.assertFalse(inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digita_xyz"));
+			Assert.assertTrue(inputApp.containsText_ignoringCaseAndSpecialChars("Welcome to Digital"));
+			
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// About us
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4whowearev2holderapp";
 			new GotoUrl(page, test, _url);
 			
@@ -87,31 +88,23 @@ public class HomePageTest extends BaseTest{
 			listApp.scrollIntoViewIfNeeded();
 			listApp.singleInstanceExists();
 			listApp.isVisible();
+			listApp.takeScreenshot();
 			listApp.highlightApp();
-			listApp.containsText_ignoringCaseAndSpecialChars("xyzRichard Lumb");
-			listApp.containsText_ignoringCaseAndSpecialChars("Richard Lumb");
-			
-			/*
-			assertAppCmd = new Command(page, test, "");
-			assertAppCmd.singleInstanceExists();
-			assertAppCmd.isVisible();
-			*/
-			
-			
+			Assert.assertFalse(listApp.containsText_ignoringCaseAndSpecialChars("xyzRichard Lumb"));
+			Assert.assertTrue(listApp.containsText_ignoringCaseAndSpecialChars("Richard Lumb"));			
 			 
-			// ************************************************************************
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// Products > Digital Wealth
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			
-			//https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=digiwealthholderapp
-			// DigiWealth.Hero.Desc.App
+			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=digiwealthholderapp";
+			new GotoUrl(page, test, _url);
 			
-			myPage = new BasePage(getPlaywrightFactory().getBrowserContext().newPage());
-			page = myPage.getPage();
-			
-			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=digiwealthholderapp");
 			appName = "DigiWealth.Hero.Desc.App";
 			inputApp = new InputApp(page, test, appName);
 			inputApp.scrollIntoViewIfNeeded();
 			inputApp.singleInstanceExists();
+			inputApp.takeScreenshot();
 			inputApp.highlightApp();
 			
 //			assertAppCmd = new Command(page, test, "DigiWealth.Hero.Desc.App");
