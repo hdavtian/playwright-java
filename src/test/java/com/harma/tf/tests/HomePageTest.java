@@ -107,54 +107,75 @@ public class HomePageTest extends BaseTest {
 			inputApp.takeScreenshot();
 			inputApp.highlightApp();
 			
-//			assertAppCmd = new Command(page, test, "DigiWealth.Hero.Desc.App");
-//			assertAppCmd.singleInstanceExists();
-//			assertAppCmd.isVisible();
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// Products > Digital Planning
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			
-			/*
-			// https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finplanholderapp
-			// FinPlan.FeatApp1.Text.App
-			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finplanholderapp");
+			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finplanholderapp";
+			new GotoUrl(page, test, _url);
 			
-			assertAppCmd = new Command(page, test, "FinPlan.FeatApp1.Text.App");
-			assertAppCmd.singleInstanceExists();
-			assertAppCmd.isVisible();
+			appName = "FinPlan.FeatApp1.Text.App";
+			inputApp = new InputApp(page, test, appName);
+			inputApp.scrollIntoViewIfNeeded();
+			inputApp.singleInstanceExists();
+			inputApp.takeScreenshot();
+			inputApp.highlightApp();
 			
-			// https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finsupermktplatholderapp
-			// FinSpmktPlat.Hero.Bg.App
-			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finsupermktplatholderapp");
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// Products > Financial supermarket
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			
-			assertAppCmd = new Command(page, test, "FinSpmktPlat.Hero.Bg.App");
-			assertAppCmd.singleInstanceExists();
-			assertAppCmd.isVisible();
+			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=finsupermktplatholderapp";
+			new GotoUrl(page, test, _url);
 			
-			// https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=appstoreapp
-			// AppStore.Featured.App
-			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=appstoreapp");
+			appName = "FinSpmktPlat.Hero.Bg.App";
+			inputApp = new InputApp(page, test, appName);
+			inputApp.scrollIntoViewIfNeeded();
+			inputApp.singleInstanceExists();
+			inputApp.takeScreenshot();
+			inputApp.highlightApp();
 			
-			assertAppCmd = new Command(page, test, "AppStore.Featured.App");
-			assertAppCmd.singleInstanceExists();
-			assertAppCmd.isVisible();
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// Products > Investcloud App Library
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			
-			// https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4icnewsholderapp
-			// v4ICNewsKPI.Input.App
-			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4icnewsholderapp");
+			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=appstoreapp";
+			new GotoUrl(page, test, _url);
 			
-			assertAppCmd = new Command(page, test, "v4ICNewsKPI.Input.App");
-			assertAppCmd.singleInstanceExists();
-			assertAppCmd.isVisible();
+			appName = "AppStore.Featured.App";
+			inputApp = new InputApp(page, test, appName);
+			inputApp.scrollIntoViewIfNeeded();
+			inputApp.singleInstanceExists();
+			inputApp.takeScreenshot();
+			inputApp.highlightApp();
 			
-			// https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4contactpageinputapp
-			// ContactPage.Title.App
-			new GotoUrl(page, test, "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4contactpageinputapp");
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// Products > News
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 			
-			assertAppCmd = new Command(page, test, "ContactPage.Title.App");
-			assertAppCmd.singleInstanceExists();
-			assertAppCmd.isVisible();
+			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4icnewsholderapp";
+			new GotoUrl(page, test, _url);
 			
-			// ************************************************************************
+			appName = "v4ICNewsKPI.Input.App";
+			inputApp = new InputApp(page, test, appName);
+			inputApp.scrollIntoViewIfNeeded();
+			inputApp.singleInstanceExists();
+			inputApp.takeScreenshot();
+			inputApp.highlightApp();
 			
-			*/
+			// >>>>>>>>>>>>>>>> New page <<<<<<<<<<<<<<<<<<<<<<<
+			// Contact us
+			// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			
+			_url = "https://www.investcloud.com/Membership/Apps/v4IcHomePage_WF_App.aspx#!/w/v4ichomepagewfapp?s=v4contactpageinputapp";
+			new GotoUrl(page, test, _url);
+			
+			appName = "ContactPage.Title.App";
+			inputApp = new InputApp(page, test, appName);
+			inputApp.scrollIntoViewIfNeeded();
+			inputApp.singleInstanceExists();
+			inputApp.takeScreenshot();
+			inputApp.highlightApp();
 			
 			
 			

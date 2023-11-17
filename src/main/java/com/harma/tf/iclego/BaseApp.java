@@ -150,7 +150,7 @@ public abstract class BaseApp {
 					"el => {" +
 						"const appDiv = document.createElement('div');" +
 						"appDiv.setAttribute('id', '"+ highlightElementId + "');" +
-						"appDiv.setAttribute('class', 'ictf-injected-app-highlight-card ictf-visible ictf-border-15-green-solid');" +
+						"appDiv.setAttribute('class', 'ictf-injected-app-highlight-card ictf-visible ictf-border-3-green-dashed');" +
 						"appDiv.style.top='"	+ _top 	+ "px';" +
 						"appDiv.style.left='"	+ _left + "px';" +
 						"appDiv.style.width='"+ (int)bbox.width + "px';" +

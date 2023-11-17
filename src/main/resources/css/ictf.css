@@ -37,3 +37,7 @@ Borders
 .ictf-border-15-green-solid {
     border: solid 15px green;
 }
+
+.ictf-border-3-green-dashed {
+    border: dashed 15px green;
+}
